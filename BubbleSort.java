@@ -1,26 +1,31 @@
 public class BubbleSort {
 
     public static void bubbleSort(int[] arr){
-        int i,j,temp;
+        int n = arr.length;
 
-        boolean swapped;
-        for( i=0;i<arr.length-1;i++){
-            swapped =false; // if array is sorted then thos flag will skip subsequent loops little optimisation
-            for(j=0;j<arr.length-1;j++){
-                if(arr[j]>arr[j+1]){
-                    temp=arr[j];
-                    arr[j]=arr[j+1];
-                    arr[j+1]=temp;
+        // Each pass bubbles the largest remaining element to the end
+        for(int i = 0; i < n - 1; i++){
+            boolean swapped = false;
+
+            // Compare adjacent elements; last i elements are already sorted
+            for(int j = 0; j < n - 1 - i; j++){
+                if(arr[j] > arr[j + 1]){
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
                     swapped = true;
                 }
             }
 
-            if(swapped == false)
+            // If no swaps in this pass, the array is already sorted
+            if(!swapped){
                 break;
+            }
         }
 
-
     }
+
+
 
     static void printArrray(int arr[]){
         int i;
@@ -34,11 +39,10 @@ public class BubbleSort {
 
 
     public static void main(String args[]){
-        int arr[] = {64,34,25,12,22,11,90};
-        int n=arr.length;
+        int arr[] = {9,1,2,5,6,8,7};
         bubbleSort(arr);
         System.out.println("sorted array :");
         printArrray(arr);
     }
-    
+
 }
