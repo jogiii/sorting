@@ -1,6 +1,4 @@
-import java.util.HashMap;
-import java.util.Map;
-import java.util.PriorityQueue;
+import java.util.*;
 
 // LeetCode 621: Task Scheduler
 // https://leetcode.com/problems/task-scheduler/
@@ -36,36 +34,39 @@ public class TaskScheduler {
         PriorityQueue<Integer> maxHeap = new PriorityQueue<>((a, b) -> b - a);
         maxHeap.addAll(freqMap.values());
 
-        int cycles = 0;
+        int time = 0;
 
         // 3) Process in rounds of size (n + 1): each round, take up to
         //    (n + 1) of the currently most-frequent tasks, run them once,
         //    decrement their counts, and re-add any that still have work
         //    left for a future round.
         while (!maxHeap.isEmpty()) {
-            int round = n + 1;
-            java.util.List<Integer> leftover = new java.util.ArrayList<>();
+           List<Integer> temp = new ArrayList<>();
+// Loop 1: grab up to (n+1) of the most frequent tasks (whatever's available)
+           for(int i=0;i<n+1;i++){
+               if(!maxHeap.isEmpty()){
+                   temp.add(maxHeap.poll());
+               }
+           }
+// Loop 2: decrement each grabbed count, re-add if still > 0
+           for(int freq : temp){
+               if(--freq >0){
+                   maxHeap.add(freq);
+               }
+           }
 
-            int tasksExecutedThisRound = 0;
-            while (round > 0 && !maxHeap.isEmpty()) {
-                int count = maxHeap.poll();
-                if (count - 1 > 0) {
-                    leftover.add(count - 1);
-                }
-                tasksExecutedThisRound++;
-                round--;
-            }
-
-            maxHeap.addAll(leftover);
-
-            // If the heap still has tasks left, this round was a FULL
-            // round of (n + 1) cycles (including any idle slots).
-            // If the heap is now empty, we only needed as many cycles as
-            // tasks we actually executed (no trailing idle cycles needed).
-            cycles += maxHeap.isEmpty() ? tasksExecutedThisRound : n + 1;
+           // If the heap is empty, there's no more work left, so this was
+           // the LAST round - we only spent as many cycles as tasks we
+           // actually ran (temp.size()), no trailing idle cycles needed.
+           // If the heap still has tasks, this round was a FULL round of
+           // (n + 1) cycles - any unfilled slots in `temp` (fewer than
+           // n + 1 tasks polled) counted as forced idle cycles, because
+           // there was still other work waiting that couldn't run yet
+           // (still on cooldown).
+           time = time + (maxHeap.isEmpty() ? temp.size() : n + 1);
         }
 
-        return cycles;
+        return time;
     }
 
     // ------------------------------------------------------------------
