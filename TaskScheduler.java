@@ -21,6 +21,28 @@ public class TaskScheduler {
     // ------------------------------------------------------------------
     // Approach 1: Max-Heap simulation -> O(26 log 26 * (n+1)) ~= O(total)
     //   Intuitive: literally simulate scheduling in blocks of (n+1).
+    //
+    // Simple algorithm (revision notes):
+    //   1) Build a frequency map: count how many times each task appears.
+    //   2) Push all the frequency VALUES (not the letters themselves) into
+    //      a max-heap - we only care about "how many are left", not which
+    //      letter it is, since identical counts are interchangeable.
+    //   3) Repeat, round by round, until the heap is empty. Each round is
+    //      (n + 1) cycles wide (1 task slot + n cooldown/filler slots):
+    //        a) Grab up to (n + 1) of the CURRENTLY most frequent tasks
+    //           from the heap into `temp` (greedy: busiest tasks first,
+    //           so they get spread out early and need less idle time).
+    //        b) "Run" each task in `temp` once by decrementing its count;
+    //           if it still has occurrences left, push it back onto the
+    //           heap for a future round.
+    //        c) Add this round's cost to `time`:
+    //             - If the heap is now EMPTY, no other task is waiting,
+    //               so we only spent as many cycles as tasks we actually
+    //               ran (temp.size()) - no trailing idle cycles needed.
+    //             - If the heap still has tasks, this round needed the
+    //               FULL (n + 1) width (task slots + forced idle slots),
+    //               because something is still waiting to cool down.
+    //   4) Return the accumulated `time`.
     // ------------------------------------------------------------------
     public int leastIntervalHeap(char[] tasks, int n) {
         // 1) Count frequency of each task.
