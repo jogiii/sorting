@@ -23,6 +23,10 @@ class User{
     User(int userId){
         this.userId = userId;
         this.followers = new HashSet<>();
+        // NOTE: do NOT add self here. Seeing your own tweets must be an
+        // unconditional rule (handled separately in getNewsFeed), never
+        // dependent on the follow/unfollow set - otherwise
+        // unfollow(userId, userId) would wrongly remove self-visibility.
         this.tweets = new LinkedList<>();
     }
 
@@ -66,6 +70,13 @@ public class Twitter {
        User user = userMap.get(userId);
 
        for(int followerId : user.followers){
+           // Skip self here - own tweets are always added separately
+           // below, unconditionally. Without this guard, an explicit
+           // follow(x, x) call would cause the user's own tweets to be
+           // counted TWICE in the news feed.
+           if(followerId == userId){
+               continue;
+           }
            int count = 0;
            for(Tweet tweet : userMap.get(followerId).tweets){
                pq.offer(tweet);
@@ -116,8 +127,33 @@ public class Twitter {
        user.removeFollower(followeeId);
    }
 
+   public static void main(String[] args) {
+       Twitter twitter = new Twitter();
 
+       twitter.postTweet(1, 5);
+       System.out.println(twitter.getNewsFeed(1));   // Expected: [5]
 
+       twitter.follow(1, 2);
+       twitter.postTweet(2, 6);
+       System.out.println(twitter.getNewsFeed(1));   // Expected: [6, 5]
+
+       twitter.unfollow(1, 2);
+       System.out.println(twitter.getNewsFeed(1));   // Expected: [5]
+
+       for (int i = 1; i <= 12; i++) {
+           twitter.postTweet(1, 100 + i);
+       }
+       System.out.println(twitter.getNewsFeed(1));   // Expected: [112..103]
+
+       // Regression test: self-follow/unfollow must NOT duplicate or
+       // hide the user's own tweets.
+       Twitter twitter2 = new Twitter();
+       twitter2.postTweet(1, 100);
+       twitter2.follow(1, 1);
+       System.out.println(twitter2.getNewsFeed(1));  // Expected: [100]
+       twitter2.unfollow(1, 1);
+       System.out.println(twitter2.getNewsFeed(1));  // Expected: [100]
+   }
 
 }
 
