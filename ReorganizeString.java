@@ -106,7 +106,7 @@ import java.util.PriorityQueue;
  */
 public class ReorganizeString {
 
-    public String reorganizeString(String s) {
+    public String reorganizeStringV1(String s) {
         int n = s.length();
 
         // Step 1: Count frequency of each lowercase letter.
@@ -170,6 +170,156 @@ public class ReorganizeString {
         }
 
         return result.toString();
+    }
+
+    /**
+     * APPROACH 2: Bucket / Slot-Placement (no heap needed) - O(n) time
+     * ------------------------------------------------------------------
+     * Instead of repeatedly asking "what's the most frequent character
+     * left?" via a heap, we exploit a key structural fact up front:
+     *
+     *   Once we know WHICH character is the most frequent (`letter`) and
+     *   HOW MANY times it appears (`max`), we can place ALL of its
+     *   occurrences directly into the EVEN indices of the result array
+     *   (0, 2, 4, ...) first - guaranteed to never collide with itself,
+     *   because even indices are never adjacent to each other.
+     *
+     *   Why is this always safe? Because we already checked
+     *   `max <= ceil(n/2)`, and ceil(n/2) is EXACTLY the number of even
+     *   indices available in an array of length n. So the majority
+     *   character always fits perfectly into the even slots with no
+     *   overflow.
+     *
+     * Once the majority character is placed, every remaining character
+     * (including leftover instances of other, less-frequent characters)
+     * gets poured into the SAME idx sequence (continuing +=2 each time),
+     * wrapping around to the odd slots (starting at index 1) once we run
+     * off the end of the array. Because no other character can possibly
+     * have a count large enough to violate adjacency (that was the whole
+     * point of the `max` feasibility check), this simple "keep walking by
+     * 2, wrap to odd slots when you hit the end" strategy is guaranteed to
+     * never place two identical characters next to each other.
+     *
+     * ------------------------------------------------------------------
+     * STEP BY STEP
+     * ------------------------------------------------------------------
+     * 1. Count frequency of each of the 26 lowercase letters -> `hash[]`.
+     * 2. Find the character with the MAX frequency -> `letter`, `max`.
+     * 3. Feasibility check: if `max > ceil(n/2)`, it's impossible to
+     *    separate all its occurrences -> return "".
+     * 4. Walk `idx = 0, 2, 4, ...` placing `letter` into `res[idx]` for
+     *    each of its `max` occurrences (draining `hash[letter]` to 0).
+     * 5. For every other character (looping i = 0..25, including the
+     *    now-drained majority letter, which is simply skipped since its
+     *    count is already 0), keep placing remaining occurrences into
+     *    `res[idx]`, incrementing `idx` by 2 each time. Whenever `idx`
+     *    would run past the end of the array, wrap back to `idx = 1`
+     *    (continuing to fill odd slots by +2 from there).
+     * 6. Return the fully-filled array as a String.
+     *
+     * ------------------------------------------------------------------
+     * DIAGRAM WALKTHROUGH for s = "aabb"  (n=4)
+     * ------------------------------------------------------------------
+     *   hash: a=2, b=2  ->  max=2 (first one found: 'a'), letter='a'
+     *   maxAllowed = ceil(4/2) = 2. max(2) not > 2 -> feasible.
+     *
+     *   res = [_, _, _, _]   (indices 0,1,2,3)
+     *
+     *   Step 4 (place majority 'a' at even slots):
+     *     idx=0: res[0]='a', hash[a]=1 remains -> idx becomes 2
+     *     idx=2: res[2]='a', hash[a]=0 remains -> idx becomes 4
+     *     hash[letter]-- > 0 now false (0 not > 0) -> loop stops
+     *     res = [a, _, a, _]     idx currently = 4
+     *
+     *   Step 5 (place remaining chars, i loops 0..25):
+     *     i='a': hash[a]=0, inner while doesn't run
+     *     i='b': hash[b]=2
+     *         idx=4 >= res.length(4) -> wrap: idx=1
+     *         res[1]='b', hash[b]=1 remains -> idx becomes 3
+     *         idx=3 < 4, ok
+     *         res[3]='b', hash[b]=0 remains -> idx becomes 5
+     *         hash[b]-- >0 now false -> inner loop stops
+     *     res = [a, b, a, b]
+     *
+     *   Final result = "abab"   (valid: no two adjacent same chars) ✔
+     *
+     * ------------------------------------------------------------------
+     * DIAGRAM WALKTHROUGH for s = "aab"  (n=3, odd length)
+     * ------------------------------------------------------------------
+     *   hash: a=2, b=1  ->  max=2, letter='a'
+     *   maxAllowed = ceil(3/2) = 2. max(2) not > 2 -> feasible.
+     *
+     *   res = [_, _, _]   (indices 0,1,2)
+     *
+     *   Step 4: idx=0: res[0]='a', idx->2.  idx=2: res[2]='a', idx->4.
+     *           hash[a] now 0 -> loop stops.
+     *           res = [a, _, a]   idx currently = 4
+     *
+     *   Step 5: i='b': hash[b]=1
+     *       idx=4 >= res.length(3) -> wrap: idx=1
+     *       res[1]='b', hash[b]=0 remains -> idx becomes 3
+     *       inner loop stops (hash[b] now 0)
+     *       res = [a, b, a]
+     *
+     *   Final result = "aba"   ✔  (matches earlier trace)
+     *
+     * Why does the "wrap to idx=1" trick never cause a collision?
+     *   Because by the time we wrap around, ALL even slots are already
+     *   filled with the (safely-spaced) majority character. The only
+     *   slots left empty are odd ones, which are naturally never adjacent
+     *   to each other either - so pouring remaining characters into them
+     *   in ANY order (even repeats of the same leftover character) can
+     *   only ever place two same characters at odd indices i and i+2,
+     *   which are NOT adjacent (there's always an even-slot character
+     *   sitting between them). This is guaranteed safe precisely because
+     *   no character (other than the already-placed majority one) can
+     *   have a count large enough to need two adjacent slots - that was
+     *   ruled out by the `max <= ceil(n/2)` feasibility check.
+     *
+     * Time Complexity:  O(n) - one pass to count, one pass (bounded by n)
+     *                    to place the majority char, one pass (bounded by
+     *                    n) to place everyone else. No heap, no log factor.
+     * Space Complexity: O(1) extra (26-size hash array is constant) plus
+     *                    O(n) for the output array/string.
+     */
+    public String reorganizeString(String s) {
+        int[] hash = new int[26];
+        for (int i=0; i<s.length(); i++) {
+            hash[s.charAt(i) - 'a']++;
+        }
+
+        int max=0;
+        int letter=0;
+        for(int i=0;i<hash.length;i++) {
+            if(hash[i]>max) {
+                max=hash[i];
+                letter=i;
+            }
+        }
+
+        if(max >(s.length()+1)/2) return "";
+        char[] res = new char[s.length()];
+
+        //fill all the even places with majority character
+        // Note: no idx-bounds/wrap check needed here - since max <= ceil(n/2),
+        // the majority char's count can never exceed the number of even slots
+        // (0, 2, 4, ...), so idx will always land within bounds during this loop.
+        int idx = 0;
+        while(hash[letter]-- > 0) {
+            res[idx] = (char)(letter+'a');
+            idx += 2;
+        }
+
+        // fill the remaining characters
+        for(int i=0;i<hash.length;i++) {
+            while(hash[i]-- >0){
+                if(idx >= res.length) idx=1;
+                res[idx] = (char)(i +'a');
+                idx +=2;
+            }
+        }
+
+        return new String(res);
     }
 
     // Simple manual tests to demonstrate the algorithm.
