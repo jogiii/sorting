@@ -49,6 +49,18 @@ import java.util.List;
  *                    traversal (see approach 3 below).
  */
 
+/*
+ * SIMPLE WORDS MEIN SAMJHO
+ * ------------------------------------------------------------------------
+ * Post-order traversal mein current node ko SABSE AAKHRI mein visit
+ * karte hain - pehle left subtree poora, fir right subtree poora, aur
+ * tabhi jaake current node ko visit karo. "Left, right, node" order.
+ *
+ * Yeh tab kaam aata hai jab bacchon (children) ka result pehle chahiye
+ * hota hai - jaise tree delete karna (parent delete karne se pehle
+ * children delete karo), ya subtree ki height/sum nikaalna.
+ */
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {

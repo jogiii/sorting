@@ -59,6 +59,17 @@ import java.util.Queue;
  *                    tree (h).
  */
 
+/*
+ * SIMPLE WORDS MEIN SAMJHO
+ * ------------------------------------------------------------------------
+ * Do trees "same" tabhi kehlaayenge jab dono ka structure bhi same ho
+ * AUR har corresponding node ki value bhi same ho. Bas dono trees ko
+ * saath-saath (parallel) traverse karo - agar kabhi ek node null hai
+ * aur dusra nahi, ya values match nahi karti, toh turant false return
+ * kar do. Agar dono ekdum saath saath null ho jaayein, matlab woh
+ * branch match ho gaya.
+ */
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {

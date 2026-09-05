@@ -22,6 +22,15 @@ import java.util.Queue;
  * just the root.
  *
  * ------------------------------------------------------------------------
+ * SIMPLE WORDS MEIN SAMJHO
+ * ------------------------------------------------------------------------
+ * Bas itna karna hai: tree ke HAR node ke left aur right child ko aapas
+ * mein swap kar do - jaise tree ka mirror image bana rahe ho. Order
+ * matter nahi karta ki pehle kis node ko swap karo, bas har ek node ko
+ * ek baar visit karke uske children swap karne hain. Queue (BFS) use
+ * karke level by level sab nodes visit kar lo aur swap karte jao.
+ *
+ * ------------------------------------------------------------------------
  * APPROACH: Level-Order (BFS) traversal using a Queue
  * ------------------------------------------------------------------------
  * We don't actually need to track levels/depth for this problem - we just

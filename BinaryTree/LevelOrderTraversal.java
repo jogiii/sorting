@@ -43,6 +43,20 @@ import java.util.Queue;
  *                    queue, plus O(n) for the output list.
  */
 
+/*
+ * SIMPLE WORDS MEIN SAMJHO
+ * ------------------------------------------------------------------------
+ * Level-order traversal matlab tree ko upar se neeche, level-by-level
+ * dekhna - pehle root wala level, fir uske bache (children) wala level,
+ * fir unke bache wala level, aur aise hi aage. Har level ke andar left
+ * se right order follow hota hai.
+ *
+ * Isko Queue (FIFO) se karte hain, Stack se nahi - kyunki hume "jo pehle
+ * mila usko pehle process karo" wala behavior chahiye, "sabse last mein
+ * mila usko pehle karo" wala nahi. Yehi BFS (Breadth-First Search) ka
+ * asli udaharan hai tree ke context mein.
+ */
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {

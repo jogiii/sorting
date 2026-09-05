@@ -37,6 +37,17 @@ import java.util.Deque;
  *      doesn't have, so it's no longer an EXACT match)
  *
  * ------------------------------------------------------------------------
+ * SIMPLE WORDS MEIN SAMJHO
+ * ------------------------------------------------------------------------
+ * `subRoot` tab `root` ka subtree kehlaayega jab `root` ke andar KAHIN
+ * bhi koi aisa node mil jaaye jiska poora subtree bilkul `subRoot` jaisa
+ * hi ho (SameTree.java wala check use karke).
+ *
+ * Toh bas `root` ke har node pe jaake "Same Tree" check chalao. Kahin
+ * bhi match mil gaya toh answer true, warna poora tree ghoomne ke baad
+ * bhi na mile toh false.
+ *
+ * ------------------------------------------------------------------------
  * KEY INSIGHT
  * ------------------------------------------------------------------------
  * `subRoot` is a subtree of `root` if there EXISTS at least one node

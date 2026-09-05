@@ -21,6 +21,19 @@ import java.util.PriorityQueue;
  *                      max allowed for any char is ceil(5/2) = 3)
  *
  * ------------------------------------------------------------------------
+ * SIMPLE WORDS MEIN SAMJHO
+ * ------------------------------------------------------------------------
+ * Kaam yeh hai: string ke letters ko is tarah rearrange karo ki koi bhi
+ * do PAAS-PAAS wale letters same na ho. Trick: hamesha sabse zyada
+ * frequency wale letter ko pehle place karo (max-heap se nikaal ke),
+ * fir dusra sabse zyada wala daalo - dono ko baari-baari se use karte
+ * raho taaki kabhi bhi same letter lagataar do baar na aaye.
+ *
+ * Agar koi ek letter itni zyada baar aata hai ki use "gaps" mein fit
+ * karna hi possible nahi (jaise "ccccd" mein 'c' 4 baar hai but sirf
+ * 5 letters hain), toh answer "" (impossible) hoga.
+ *
+ * ------------------------------------------------------------------------
  * KEY INSIGHT: When is it even POSSIBLE?
  * ------------------------------------------------------------------------
  * If the most frequent character appears more than ceil(n/2) times, it's

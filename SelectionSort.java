@@ -1,3 +1,17 @@
+/*
+ * SELECTION SORT
+ * --------------
+ * Idea bilkul seedha hai: har round mein, baaki bache hue (unsorted)
+ * part mein se sabse CHOTA element dhoondo, aur usko sabse aage wali
+ * unsorted position pe swap kar do. Yeh karte raho jab tak pura array
+ * cover na ho jaaye.
+ *
+ * Matlab: "select karo minimum, fir swap karo" - baar baar.
+ *
+ * Time: O(n^2) hamesha (best/worst/average sab same) - comparisons
+ * kam nahi hote chahe array sorted ho ya na ho.
+ * Space: O(1) - in-place sort, extra array nahi chahiye.
+ */
 public class SelectionSort {
 
     static void selectionSort(int [] arr){
@@ -28,7 +42,7 @@ public class SelectionSort {
         }
         System.out.println();
     }
-  
+
     public static void main(String[] args){
         int[] arr = { 64, 25, 12, 22, 11 };
 
@@ -40,5 +54,5 @@ public class SelectionSort {
         System.out.print("Sorted array: ");
         printArray(arr);
     }
-    
+
 }

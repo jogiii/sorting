@@ -1,3 +1,18 @@
+/*
+ * BUBBLE SORT
+ * -----------
+ * Simple si baat hai: baar-baar pura array ghumo, aur jab bhi do paas-paas
+ * wale elements galat order mein mile (bada pehle, chota baad mein), unko
+ * aapas mein swap kar do. Ek baar poori list ghoomne ke baad sabse bada
+ * element "bubble" ho ke sabse aakhri mein pahunch jaata hai - isiliye
+ * naam Bubble Sort pada.
+ *
+ * Agar kisi pass mein ek bhi swap nahi hua, matlab array already sorted
+ * hai - toh wahin ruk jao (early exit), bekar mein pura loop mat chalao.
+ *
+ * Time: O(n^2) worst/average case, O(n) best case (already sorted).
+ * Space: O(1) - koi extra array nahi chahiye.
+ */
 public class BubbleSort {
 
     public static void bubbleSort(int[] arr){

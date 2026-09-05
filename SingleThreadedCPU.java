@@ -21,6 +21,20 @@ import java.util.PriorityQueue;
  *   Output: [0,2,1]
  *
  * ------------------------------------------------------------------------
+ * SIMPLE WORDS MEIN SAMJHO
+ * ------------------------------------------------------------------------
+ * Ek hi CPU hai jo ek time pe sirf ek hi task chala sakta hai, aur ek
+ * baar shuru hone ke baad task ko beech mein rok nahi sakte (no
+ * preemption). Jab CPU free ho aur uske paas multiple tasks waiting
+ * hon, toh woh sabse CHOTA processing time wala task pehle choose
+ * karega (tie hone pe chota index wala).
+ *
+ * Agar koi bhi task available nahi hai, CPU idle rehta hai aur seedha
+ * agle task ke arrival time tak jump kar jaata hai (waqt barbaad nahi
+ * karta idle ticks simulate karke). Min-heap use karte hain taaki
+ * "sabse chota processing time wala kaun hai" turant pata chal jaaye.
+ *
+ * ------------------------------------------------------------------------
  * WALKTHROUGH / DIAGRAM for tasks = [[1,4],[3,3],[2,1]]  (revise this later!)
  * ------------------------------------------------------------------------
  * Index | enqueueTime | processingTime

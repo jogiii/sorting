@@ -51,6 +51,18 @@ import java.util.List;
  * Space Complexity: depends on approach - O(h) for recursive/stack-based
  *                    approaches (h = tree height), O(1) extra for Morris
  *                    traversal (see approach 3 below).
+ *
+ * ------------------------------------------------------------------------
+ * SIMPLE WORDS MEIN SAMJHO
+ * ------------------------------------------------------------------------
+ * In-order traversal ka matlab: pehle left subtree poora ghoomo, fir
+ * current node ko visit karo, fir right subtree poora ghoomo. Bas
+ * itna hi - "left, node, right" order.
+ *
+ * Sabse best baat: agar tree ek BST hai, toh in-order traversal ka
+ * output HAMESHA sorted order mein milega - bina kuch alag se sort
+ * kiye. Isi wajah se BST mein kth smallest/largest dhoondhna ya
+ * "valid BST hai ya nahi" check karna in-order se easy ho jaata hai.
  */
 
 /**

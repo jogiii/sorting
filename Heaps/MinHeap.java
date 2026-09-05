@@ -12,6 +12,15 @@ import java.util.Arrays;
  *   - parent index  = (i - 1) / 2
  *   - left child     = 2 * i + 1
  *   - right child    = 2 * i + 2
+ *
+ * SIMPLE WORDS MEIN SAMJHO:
+ * Min-Heap mein sabse CHOTA element hamesha upar (root, index 0) baitha
+ * rehta hai. Insert karte waqt naya element array ke aakhri mein daalo,
+ * fir "bubble up" karo - jab tak woh apne parent se chota hai, uske
+ * saath swap karte jao, upar chadte jao, jab tak sahi jagah na mil
+ * jaaye. Array ke andar hi tree ka structure store hota hai - koi
+ * pointer/node object nahi chahiye, bas index math se kaam chal jaata
+ * hai.
  */
 public class MinHeap {
 

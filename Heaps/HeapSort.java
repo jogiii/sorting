@@ -28,6 +28,17 @@ import java.util.Arrays;
  *                    for heapify which is O(log n)).
  *
  * Stability: NOT stable (equal elements can be reordered relative to each other).
+ *
+ * ------------------------------------------------------------------------
+ * SIMPLE WORDS MEIN SAMJHO
+ * ------------------------------------------------------------------------
+ * Pehle pura array ek max-heap bana lo - iska matlab sabse bada element
+ * hamesha index 0 (root) pe aa jaata hai. Fir usko array ke sabse aakhri
+ * (unsorted) position ke saath swap kar do - ab woh apni final sorted
+ * jagah pe pahunch gaya. Ab "heap size" ek kam kar do (aakhri element ko
+ * ignore karo) aur root ko heapify-down karke max-heap property wapas
+ * theek kar lo. Yeh process repeat karte raho jab tak sirf ek element na
+ * bache - array poora sort ho jaayega, ascending order mein.
  */
 public class HeapSort {
 

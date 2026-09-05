@@ -38,6 +38,19 @@ import java.util.Stack;
  *   (no right child). Difference = 4 > 1 -> NOT balanced.
  *
  * ------------------------------------------------------------------------
+ * SIMPLE WORDS MEIN SAMJHO
+ * ------------------------------------------------------------------------
+ * Ek tree "balanced" tabhi kehlaata hai jab HAR node ke liye, uske left
+ * aur right subtree ki height mein farak 1 se zyada na ho. Sirf root pe
+ * check karna kaafi nahi - yeh rule HAR node pe follow hona chahiye.
+ *
+ * Naive approach mein har node pe height() dobara se calculate karte hain
+ * - isse kaafi kaam repeat hota hai (O(n^2) tak). Better approach: ek hi
+ * bottom-up pass mein height nikaalo AUR balance check bhi karo saath
+ * saath - jaise hi kahin unbalanced mile, turant upar tak signal bhej do
+ * (-2 jaisa special value) taaki aage ka kaam rok diya jaaye.
+ *
+ * ------------------------------------------------------------------------
  * WHY DOES THIS MATTER?
  * ------------------------------------------------------------------------
  * Height-balanced trees guarantee O(log n) height, which is what makes

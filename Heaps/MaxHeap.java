@@ -9,6 +9,13 @@ import java.util.Arrays;
  * This means the LARGEST element is always at the root (index 0).
  *
  * This is the mirror image of MinHeap.java - every comparison is flipped.
+ *
+ * SIMPLE WORDS MEIN SAMJHO:
+ * Max-Heap mein sabse BADA element hamesha upar (root, index 0) baitha
+ * rehta hai. Jab bhi naya element daalte ho, use array ke aakhri mein
+ * daalo fir "bubble up" karo - jab tak woh apne parent se bada hai,
+ * uske saath swap karte raho, upar chadte raho. MinHeap ka bilkul ulta
+ * logic hai yahan.
  */
 public class MaxHeap {
 

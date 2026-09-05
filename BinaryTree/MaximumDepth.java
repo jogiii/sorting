@@ -52,6 +52,18 @@ import java.util.Queue;
  *                    O(w) for BFS (w = max width of tree).
  */
 
+/*
+ * SIMPLE WORDS MEIN SAMJHO
+ * ------------------------------------------------------------------------
+ * Maximum depth matlab root se sabse door wale leaf tak kitne nodes
+ * ka lamba raasta hai. Formula seedha hai: kisi bhi node ki depth =
+ * 1 + (uske left aur right subtree ki depth mein se jo bada ho).
+ *
+ * Teen tarike se nikaal sakte ho: recursion (sabse simple), BFS/queue
+ * se (level-by-level count karo, jitne levels utni hi depth), ya phir
+ * stack use karke iterative DFS mein depth manually track karo.
+ */
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {

@@ -1,5 +1,16 @@
 import java.util.*;
 
+// LeetCode 355: Design Twitter
+// https://leetcode.com/problems/design-twitter/
+//
+// SIMPLE WORDS MEIN SAMJHO:
+// Yeh ek mini Twitter jaisa system design karna hai. Har user apne
+// tweets post kar sakta hai, kisi ko follow/unfollow kar sakta hai, aur
+// apna "news feed" dekh sakta hai - jisme uske apne aur jinko woh follow
+// karta hai unke sabse RECENT 10 tweets time ke hisaab se (newest
+// pehle) dikhne chahiye. Har tweet ka ek time-counter hota hai taaki
+// hum jaan sakein kaunsa tweet pehle aaya tha, aur PriorityQueue
+// (max-heap by time) use karte hain sabse naye tweets nikalne ke liye.
 class Tweet implements Comparable<Tweet>{
     int time;
     int tweetId;

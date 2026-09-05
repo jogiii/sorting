@@ -47,6 +47,18 @@ import java.util.List;
  *                    traversal (see approach 3 below).
  */
 
+/*
+ * SIMPLE WORDS MEIN SAMJHO
+ * ------------------------------------------------------------------------
+ * Pre-order traversal mein current node ko SABSE PEHLE visit karte hain,
+ * fir left subtree, fir right subtree. "Node, left, right" order - bas
+ * yaad rakhna hai ki node hamesha pehle aata hai.
+ *
+ * Kaam aata hai jab tree ko copy/clone karna ho (parent pehle banao,
+ * fir children), ya tree ko serialize karna ho (file mein save karke
+ * baad mein wapas same order mein banane ke liye).
+ */
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {

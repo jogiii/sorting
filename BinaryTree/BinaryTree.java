@@ -36,6 +36,20 @@ import java.util.List;
  *   Post-order (Left,Right,Node):  4 5 2 6 3 1
  */
 
+/*
+ * SIMPLE WORDS MEIN SAMJHO
+ * ------------------------------------------------------------------------
+ * Teeno traversals ka skeleton bilkul same hai - bas "visit(node)" kahan
+ * karte ho, wahi farak hai:
+ *   Pre-order:  pehle node dekho, fir left, fir right
+ *   In-order:   pehle left, fir node dekho, fir right (beech mein sandwich)
+ *   Post-order: pehle left, fir right, sabse aakhri mein node dekho
+ *
+ * Recursive version seedha samajh aata hai (definition jaisa hi hai),
+ * iterative version stack use karke wahi cheez bina recursion ke karta
+ * hai - interview mein dono practice karna acha rehta hai.
+ */
+
 public class BinaryTree {
 
     static class Node {

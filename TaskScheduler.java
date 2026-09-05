@@ -16,6 +16,17 @@ import java.util.*;
 // Key idea: greedily run the MOST FREQUENT remaining task first each
 // round, so frequent tasks get spread out as early as possible - this
 // minimizes forced idle time.
+//
+// ------------------------------------------------------------------------
+// SIMPLE WORDS MEIN SAMJHO
+// ------------------------------------------------------------------------
+// Jo task sabse zyada baar repeat hota hai, usko pehle chalao - taaki
+// woh jaldi se jaldi spread ho jaaye aur baaki tasks ke saath cooldown
+// (gap) manage karna easy ho jaaye. Max-heap mein saare tasks ki
+// frequency daal do, aur har round mein (n+1) size ke blocks mein sabse
+// zyada frequent tasks nikaal ke "chalao" (count kam karo). Agar heap
+// khaali ho jaaye toh utna hi time lagega jitne tasks chalaye, warna
+// poora (n+1) round ka time lagega (kuch idle/cooldown cycles ke saath).
 public class TaskScheduler {
 
     // ------------------------------------------------------------------

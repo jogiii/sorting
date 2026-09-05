@@ -25,6 +25,18 @@ package BinaryTree;
  * k nodes has (k - 1) edges.
  *
  * ------------------------------------------------------------------------
+ * SIMPLE WORDS MEIN SAMJHO
+ * ------------------------------------------------------------------------
+ * Diameter matlab tree ke andar do nodes ke beech ka SABSE LAMBA raasta
+ * (edges count karke) - yeh raasta root se guzre ya na guzre, dono
+ * chalega. Trick yeh hai: har node ke liye uske left aur right subtree
+ * ki height jodo - yehi us node se guzarne wale sabse lambe raaste ki
+ * length hai. Poori tree mein sabse bada aisa jod hi answer hai.
+ *
+ * Ek hi post-order pass mein height nikaalte waqt hi diameter bhi track
+ * karte jao - do kaam ek saath, O(n) time mein.
+ *
+ * ------------------------------------------------------------------------
  * KEY INSIGHT
  * ------------------------------------------------------------------------
  * For ANY node, the longest path that passes THROUGH that node (as the
